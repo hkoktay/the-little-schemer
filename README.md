@@ -112,7 +112,11 @@ or the online documentation.[5]
 References:
 
 [1] https://mitpress.mit.edu/books/little-schemer
+
 [2] https://github.com/cisco/ChezScheme
+
 [3] http://www.cs.indiana.edu/chezscheme/debug/
+
 [4] https://cisco.github.io/ChezScheme/csug9.4/
+
 [5] https://cisco.github.io/ChezScheme/csug9.5/expeditor.html#./expeditor:h0
