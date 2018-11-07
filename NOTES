@@ -1,0 +1,171 @@
+Data definitions
+------------------------------------------------------------------------
+
+An [atom] is
+- Number or
+- String or
+- Symbol
+
+A [lat] is
+- () or
+- (cons [atom] [lat])
+
+A [number] is
+- 0 or
+- (add1 [number])
+
+A [tup] is
+- 0 or
+- (cons [number] [tup])
+
+A [s-exp] is an
+- [atom] or
+- [listof s-exp]
+
+A [listof s-exp] is
+- () or
+- (cons [s-exp] [list-of sexp])
+
+An arithmetic expression [aexp] is an
+- [atom] or
+- (list [aexp] [a-operator] [aexp])
+
+An arithmetic operator [a-operator] is
+- o+ or
+- o* or
+- oexpt
+
+A [ln] is
+- () or
+- [listof ()]
+
+A [set] is
+- () or
+- [listof atom]
+There are no 'equal?' atoms in [listof atom].
+
+A [l-set] is
+- () or
+- (cons [set] [l-set])
+
+A [pair] is one of
+- (cons [s-exp] [s-exp])
+
+A relation [rel] is a
+- [setof pairs]
+
+A function [fun] is
+- [setof pairs] where (firsts rel) is a [set]
+
+A [fullfun] is
+- [setof pairs] where (seconds rel) is a [set]
+
+A [sexp-of number] is a
+- [s-exp] where every [atom] is a number
+
+A [pora] is an
+- atom or
+- pair
+
+A [sorn] is a
+- symbol or
+- number
+
+A [son] is a
+- [s-exp] where every [atom] is a number
+
+
+The "rules"
+-------------------------------------------------------------------------
+
+The Law of Car
+
+    The primitive 'car' is defined only for non-empty lists.
+
+The Law of Cdr
+
+    The primitive 'cdr' is defined only for non-empty lists. The 'cdr'
+    of any non-empty list is always another list.
+
+The Law of Cons
+
+    The primitive 'cons' takes two arguments. The second argument to
+    cons must be a list. The result is a list.  (In most scheme
+    implementations cons work also on sexp not only on [list-of
+    sexp].)
+
+The Law of Null?
+
+    The primitive null? is defined only for lists. (In most scheme
+    implementations null? works also on sexps not only on [list-of
+    sexp].)
+
+The Law of Eq?
+
+    The primitive 'eq?' takes two arguments. Each must be a nonnumeric
+    atom.
+
+
+The Ten Commandments
+--------------------------------------------------------------------------
+
+The First Commandment
+
+    When recurring on a list of atoms, 'lat', ask two questions about
+    it: (null? lat) and *else*.  When recurring on a number, 'n', ask
+    two questions about it: (zero? n) and else.  When recurring on a
+    list of sexp, l, ask three question about it: (null? l), (atom?
+    (car l)), and *else*.
+
+The Second Commandment
+
+    Use 'cons' to build lists.
+
+The Third Commandment
+
+    When building a list, describe the first typical element, and then
+    cons it onto the natural recursion.
+
+The Fourth Commandment
+
+    Always change at least one argument while recurring. When
+    recurring. When recurring on a list of atoms, 'lat', use (cdr
+    lat). When recurring on a number, 'n', use (sub1 n). And when
+    recurring on a list of S-expressions, 'l', use (car l) and (cdr l)
+    if neither (null? l) nor (atom?  (car l)) are true.
+    
+    It must be changed to be closer to termination. The changing
+    argument must be tested in the termination condition:
+    - when using cdr, test termination with null? and
+    - when using sub1, test termination with zero?.
+
+The Fifth Commandment
+
+    When building a value with 'o+', always use 0 for the value of the
+    terminating line, for adding 0 does not change the value of an
+    addition.  When building a value with 'o*', always use 1 for the
+    value of the terminating line, for multiplying by 1 does not
+    change the value of a multiplication.  When building a value with
+    cons, always consider () for the value of the terminating line.
+
+The Sixth Commandment
+
+    Simplify only after the function is correct.
+
+The Seventh Commandment
+
+    Recur on the subparts that are of the same nature:
+    - On the sublists of a list.
+    - On the subexpressions of an arithmetic expression.
+
+The Eighth Commandment
+
+    Use help functions to abstract from representations.
+
+The Ninth Commandment
+
+    Abstract common patterns with a new function.
+
+The Tenth Commandment
+
+    Build functions to collect more than one value at a time.
